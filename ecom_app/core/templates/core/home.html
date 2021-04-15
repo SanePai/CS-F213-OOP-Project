@@ -1,7 +1,7 @@
 {% extends "core/base.html" %}
 {% block content %}
     {% for prod in prods %}
-    <div class="card mt-2" style="width: 18rem">
+    <div class="card mr-3" style="top:1rem; left: 1rem; width: 20rem; margin-right: 0.5rem; ">
         <a href="#">
             <img src="{{ prod.img_src }}" class="card-img-top" alt="Product image">
         </a>
@@ -10,12 +10,16 @@
                 <h5 class="card-title">{{ prod.title }}</h5>
             </a>
             <a class="card-subtitle text-muted" href="#">Sold by: {{ prod.seller }}</a>
-            <p class="card-text">{{ prod.content }}</p>
+            <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ prod.content }}</p>
+        </div>
+        <div class='card-footer'>
             <a href="#" class="card-link btn btn-outline-primary">View Product</a>
             <a href="#" class="card-link btn btn-primary">Add to Cart</a>
         </div>
       </div>
     {% endfor %}
+
+
     <!--
     {% if is_paginated %}
 
