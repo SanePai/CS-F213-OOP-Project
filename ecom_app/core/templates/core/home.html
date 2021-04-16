@@ -1,4 +1,17 @@
 {% extends "core/base.html" %}
+
+{% block nav %}
+  <!-- Navs for filtering based on type of product (using tags) -->
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" href="#">All</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" style="text-decoration: none; color: inherit;" href="#">Books</a>
+    </li>
+{% endblock %}
+
+
 {% block content %}
     {% for prod in prods %}
     <div class="card mr-3" style="top:1rem; left: 1rem; width: 20rem; margin-right: 0.5rem; ">
