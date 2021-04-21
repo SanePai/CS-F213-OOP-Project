@@ -2,22 +2,48 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-    <div class="content-section">
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Join Today</legend>
-                {{ form|crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Sign Up</button>
-            </div>
-        </form>
-        <div class="border-top pt-3">
-            <small class="text-muted">
-                Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
-            </small>
-        </div>
+<center>
+    <div class="content-section w-25 align-items-center"  style="position:relative;top:3em;">
+       <form method="POST">
+          {% csrf_token %}
+          <div class="form-outline mb-4">
+            <input name="username" type="text" id="form1Example1" class="form-control" placeholder="Username"/>
+         </div>
+          <div class="form-outline mb-4">
+             <input name="email" type="email" id="form1Example1" class="form-control" placeholder="Email"/>
+          </div>
+          <div class="form-outline mb-4">
+            <input name="first_name" type="email" id="form1Example1" class="form-control" placeholder="First name"/>
+         </div>
+         <div class="form-outline mb-4">
+            <input name="last_name" type="email" id="form1Example1" class="form-control" placeholder="Last name"/>
+         </div>
+          <div class="form-outline mb-4">
+             <input name="password" type="password" id="form1Example2" class="form-control" placeholder="Password" />
+          </div>
+          <div class="form-outline mb-4">
+            <input name="password2" type="email" id="form1Example1" class="form-control" placeholder="Confirm password"/>
+         </div>
+          <div class="column mb-4" style="width: max-content;">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="user_type" id="inlineRadio1" value="CUSTOMER">
+                <label class="form-check-label" for="inlineRadio1">Customer</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="user_type" id="inlineRadio2" value="RETAILER">
+                <label class="form-check-label" for="inlineRadio2">Retailer</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="user_type" id="inlineRadio3" value="WHOLESALER">
+                <label class="form-check-label" for="inlineRadio3">Wholesaler</label>
+              </div>
+          </div>
+          <!-- Submit button -->
+          <button type="submit" class="btn btn-primary btn-block">Register</button>
+       </form>
+       <br>
+       <div class="border-top pt-3">
+       </div>
     </div>
-
-    {% endblock content %}
+ </center>
+{% endblock content %}
