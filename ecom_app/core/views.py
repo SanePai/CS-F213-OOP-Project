@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import datetime
+from django.contrib.auth.models import User
 prods = [
     {
         "seller": "Seller1",
@@ -29,7 +30,8 @@ prods = [
 
 
 def home_view(request):
-    return render(request, 'core/home.html', context = {"prods": prods})
+    profile = User.objects.filter(username = request.user.username).first()
+    return render(request, 'core/home.html', context = {"prods": prods, "profile": profile})
 
 def about_view(request):
     return render(request, 'core/about.html', context = {"title": "About"})

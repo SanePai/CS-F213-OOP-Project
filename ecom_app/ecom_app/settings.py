@@ -110,7 +110,7 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 LOGIN_URL = 'login'
-LOGIN_REDIRECT = 'home'
+LOGIN_REDIRECT_URL = 'app-home'
 USE_I18N = True
 
 USE_L10N = True
