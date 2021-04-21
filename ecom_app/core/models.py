@@ -6,4 +6,4 @@ class Product(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True, null=True)
-    img = models.ImageField(upload_to = "product_imgs/", blank=True, null=True)
+    img = models.ImageField(default = "default.png", upload_to = "product_imgs/", blank=True, null=True)
