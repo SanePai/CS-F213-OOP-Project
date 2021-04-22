@@ -55,6 +55,7 @@
                   </ul>
                 {% endif %}
                 {% if user.is_authenticated %}
+                      <pre>{{user.profile.user_type}}</pre>
                       <a class = "nav-item nav-link btn btn-primary d-flex" style="float: right; margin-left: 0.5rem;" href="/logout">Logout</a>
                   </ul>
                 {% endif %}
