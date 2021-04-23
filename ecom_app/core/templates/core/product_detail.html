@@ -9,7 +9,7 @@
             <h5 class="card-title">{{ object.title }}</h5>
         </a>
         <a class="card-subtitle text-muted" href="#">Sold by: {{ object.seller }}</a>
-        <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ prod.content }}</p>
+        <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ object.content }}</p>
     </div>
     <div class='card-footer'>
       {% if object.seller == user %}

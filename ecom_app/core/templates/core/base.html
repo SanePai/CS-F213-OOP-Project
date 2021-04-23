@@ -31,17 +31,19 @@
                   </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Categories
+                      My Account
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
+                      <li><a class="dropdown-item" href="#">Profile</a></li>
+                      <li><a class="dropdown-item" href="#">Orders</a></li>
+                      {% if user.profile.user_type == 'WHOLESALER' or user.profile.user_type == 'RETAILER' %}
                       <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                      <li><a class="dropdown-item" href="#">Add/Edit products</a></li>
+                      {% endif %}
                     </ul>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">{{user.profile.user_type}} Account</a>
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">{{user.profile.user_type}}</a>
                   </li>
                 </ul>
                   <form class="d-flex text-center" style="margin-right: 3em;">
