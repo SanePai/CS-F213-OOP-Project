@@ -1,8 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Product(models.Model):
-    seller = models.CharField(max_length=255)
+    seller = models.ForeignKey(User, on_delete = models.CASCADE)
     date_posted = models.DateTimeField(auto_now_add=True)
     stock = models.IntegerField(default=0)
     title = models.CharField(max_length=255)

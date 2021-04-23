@@ -43,7 +43,6 @@ class ProductCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         return super().form_valid(form)
 
     def test_func(self):
-        product = self.object()
         if (self.request.user.profile.user_type == "WHOLESALER") or (self.request.user.profile.user_type == "RETAILER"):
             return True 
         return False
