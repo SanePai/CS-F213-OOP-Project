@@ -13,8 +13,8 @@
     </div>
     <div class='card-footer'>
       {% if object.seller == user %}
-        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="/product/{{ object.id }}/update">Update or add stock</a>
-        <a class="btn btn-danger btn-sm mt-1 mb-1" href="">Delete</a>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'prod-update' object.id %}">Update or add stock</a>
+        <a class="btn btn-danger btn-sm mt-1 mb-1" href="/product/{{ object.id }}/delete">Delete</a>
       {% else %}
         <a href="#" class="card-link btn btn-outline-primary">View Product</a>
         <a href="#" class="card-link btn btn-primary">Add to Cart</a>

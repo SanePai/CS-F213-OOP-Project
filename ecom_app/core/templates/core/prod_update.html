@@ -8,13 +8,13 @@
            <legend class="border-bottom mb-4">Edit prodcut - {{ prod.title }}</legend>
           {% csrf_token %}
           <div class="form-outline mb-4">
-            <input name="title" type="text" id="form1Example1" class="form-control" placeholder="{{ prod.title }}"/>
+            <input name="title" type="text" value="{{ prod.title }}" class="form-control" />
          </div>
           <div class="form-outline mb-4">
-             <input name="content" type="text" id="form1Example1" class="form-control" placeholder="{% if prod.content != '' %}{{ prod.content }}{% else %}No Description given{% endif %}"/>
+             <input name="content" type="text" value="{{ prod.content }}" class="form-control" placeholder="{% if prod.content != '' %}{{ prod.content }}{% else %}No Description given{% endif %}"/>
           </div>
           <div class="form-outline mb-4">
-            <input name="stock" type="number" id="form1Example1" class="form-control" placeholder="{{ prod.stock }}"/>
+            <input name="stock" type="number" class="form-control" value="{{ prod.stock }}"/>
          </div>
          <!-- Submit button -->
           <button type="submit" value="Save" class="btn btn-primary btn-block">Update product</button>

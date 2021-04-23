@@ -37,6 +37,7 @@ def logout_view(request):
 class ProductCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Product
     fields = ['title', 'content', 'img', 'stock']
+    success_url = '/'
 
     def form_valid(self, form):
         form.instance.seller = self.request.user
@@ -52,12 +53,13 @@ class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     context_object_name = 'prod'
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.seller = self.request.user
         return super().form_valid(form)
 
     def test_func(self):
         product = self.get_object()
         return (self.request.user == product.seller)
+
 
 
 class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
