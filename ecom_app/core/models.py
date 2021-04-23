@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Create your models here.
 class Product(models.Model):
@@ -10,4 +11,10 @@ class Product(models.Model):
     content = models.TextField(blank=True, null=True)
     img = models.ImageField(default = "default.png", upload_to = "product_imgs/", blank=True, null=True)
     rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return self.title
+        
+    def get_absolute_url(self):
+        return reverse('post-detail', kwargs={'pk': self.pk})
     
