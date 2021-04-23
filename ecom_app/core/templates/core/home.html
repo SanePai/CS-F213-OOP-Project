@@ -13,25 +13,76 @@
 
 
 {% block content %}
+{% if user.profile.user_type == "CUSTOMER" %}
     {% for prod in prods %}
-    <div class="card mr-3" style="top:1rem; left: 1rem; width: 20rem; margin-right: 0.5rem; ">
-        <a href="#">
-            <img src="{{ prod.img.url }}" class="card-img-top" alt="Product image">
-        </a>
-        <div class="card-body">
-            <a style="text-decoration: none; color:inherit" href="#">
-                <h5 class="card-title">{{ prod.title }}</h5>
+      {% if prod.seller.profile.user_type == "RETAILER" %}
+        <div class="card mr-3" style="top:1rem; left: 1rem; width: 20rem; margin-right: 0.5rem; ">
+            <a href="#">
+                <img src="{{ prod.img.url }}" class="card-img-top" alt="Product image">
             </a>
-            <a class="card-subtitle text-muted" href="#">Sold by: {{ prod.seller }}</a>
-            <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ prod.content }}</p>
-        </div>
-        <div class='card-footer'>
-            <a href="{% url 'prod-detail' prod.id %}" class="card-link btn btn-outline-primary">View Product</a>
-            <a href="#" class="card-link btn btn-primary">Add to Cart</a>
-        </div>
-      </div>
+            <div class="card-body">
+                <a style="text-decoration: none; color:inherit" href="#">
+                    <h5 class="card-title">{{ prod.title }}</h5>
+                </a>
+                <a class="card-subtitle text-muted" href="#">Sold by: {{ prod.seller }}</a>
+                <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ prod.content }}</p>
+            </div>
+            <div class='card-footer'>
+                <a href="{% url 'prod-detail' prod.id %}" class="card-link btn btn-outline-primary">View Product</a>
+                <a href="#" class="card-link btn btn-primary">Add to Cart</a>
+            </div>
+          </div>  
+      {% endif %}
     {% endfor %}
+{% endif %}
     
+{% if user.profile.user_type == "RETAILER"%}
+    {% for prod in prods %}
+      {% if prod.seller.profile.user_type == "WHOLESALER" %}
+        <div class="card mr-3" style="top:1rem; left: 1rem; width: 20rem; margin-right: 0.5rem; ">
+            <a href="#">
+                <img src="{{ prod.img.url }}" class="card-img-top" alt="Product image">
+            </a>
+            <div class="card-body">
+                <a style="text-decoration: none; color:inherit" href="#">
+                    <h5 class="card-title">{{ prod.title }}</h5>
+                </a>
+                <a class="card-subtitle text-muted" href="#">Sold by: {{ prod.seller }}</a>
+                <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ prod.content }}</p>
+            </div>
+            <div class='card-footer'>
+                <a href="{% url 'prod-detail' prod.id %}" class="card-link btn btn-outline-primary">View Product</a>
+                <a href="#" class="card-link btn btn-primary">Add to Cart</a>
+            </div>
+          </div>  
+      {% endif %}
+    {% endfor %}
+{% endif %}
+
+    
+{% if request.user.profile.user_type == "WHOLESALER" %}
+    {% for prod in prods %}
+      {% if seller.profile.user_type == "WHOLESALER" %}
+        <div class="card mr-3" style="top:1rem; left: 1rem; width: 20rem; margin-right: 0.5rem; ">
+            <a href="#">
+                <img src="{{ prod.img.url }}" class="card-img-top" alt="Product image">
+            </a>
+            <div class="card-body">
+                <a style="text-decoration: none; color:inherit" href="#">
+                    <h5 class="card-title">{{ prod.title }}</h5>
+                </a>
+                <a class="card-subtitle text-muted" href="#">Sold by: {{ prod.seller }}</a>
+                <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ prod.content }}</p>
+            </div>
+            <div class='card-footer'>
+                <a href="{% url 'prod-detail' prod.id %}" class="card-link btn btn-outline-primary">View Product</a>
+                <a href="#" class="card-link btn btn-primary">Add to Cart</a>
+            </div>
+          </div>  
+      {% endif %}
+    {% endfor %}
+{% endif %}
+
     
     {% if is_paginated %}
 
