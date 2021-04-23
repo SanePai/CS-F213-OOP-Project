@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from .models import Product
+from django.db.models import Q
 from django.views.generic import (
     ListView,
     DetailView,
@@ -24,12 +25,8 @@ class ProductListView(ListView):
     paginate_by = 20
 
 def home_view(request):
-    try:
-        just_logged_out = request.session.get('just_logged_out',False)
-    except:
-        just_logged_out = False
     profile = User.objects.filter(username = request.user.username).first()
-    return render(request, 'core/home.html', context = {"prods": prods, "just_logged_out": just_logged_out})
+    return render(request, 'core/home.html', context = {"prods": prods})
 
 def logout_view(request):
     logout(request)
@@ -82,3 +79,11 @@ class SellerProductListView(ListView):
 
 class ProductDetailView(DetailView):
     model = Product
+
+def search(request):
+    if request.method == 'POST':
+        form = request.POST
+        search_q = form.get('search')
+        results = Product.objects.filter(Q(title__icontains=search_q) | Q(content__icontains=search_q))
+        return render(request, 'core/home.html', context = {"prods": results})
+

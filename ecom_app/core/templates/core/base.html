@@ -46,8 +46,9 @@
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">{{user.profile.user_type}}</a>
                   </li>
                 </ul>
-                  <form class="d-flex text-center" style="margin-right: 3em;">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <form method="POST" action="/search" class="d-flex text-center" style="margin-right: 3em;">
+                    {% csrf_token %}
+                    <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
                     <button class="nav-item btn btn-outline-success" type="submit">Search</button>
                   </form>
                   {% if not user.is_authenticated %}

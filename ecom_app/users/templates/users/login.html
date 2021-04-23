@@ -1,6 +1,5 @@
 {% extends 'core/base.html' %}
 {% load crispy_forms_tags %}
-{% load provider_login_url %}
 
 {% block content %}
 <center>
@@ -27,7 +26,7 @@
         </div>
         <!-- Submit button -->
         <button type="submit" class="btn btn-primary btn-block" style="margin-bottom: 0.5em;">Sign in</button>
-        <a class="btn btn-outline-dark" href="{% provider_login_url 'google' %}" role="button" style="margin-bottom: 0.5em;text-transform:none;margin-left: 0.5em;text-overflow: ellipsis;">
+        <a class="btn btn-outline-dark" href="/accounts/google/login" role="button" style="margin-bottom: 0.5em;text-transform:none;margin-left: 0.5em;text-overflow: ellipsis;">
          <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
          Sign-in with Google
         </a>
