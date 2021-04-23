@@ -1,0 +1,24 @@
+{% extends "core/base.html" %}
+{% block content %}
+  <div class="card mr-3" style="top:1rem; left: 1rem; width: 20rem; margin-right: 0.5rem; ">
+    <a href="#">
+        <img src="{{ object.img.url }}" class="card-img-top" alt="Product image">
+    </a>
+    <div class="card-body">
+        <a style="text-decoration: none; color:inherit" href="#">
+            <h5 class="card-title">{{ object.title }}</h5>
+        </a>
+        <a class="card-subtitle text-muted" href="#">Sold by: {{ object.seller }}</a>
+        <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ prod.content }}</p>
+    </div>
+    <div class='card-footer'>
+      {% if object.seller == user %}
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="">Update or add stock</a>
+        <a class="btn btn-danger btn-sm mt-1 mb-1" href="">Delete</a>
+      {% else %}
+        <a href="#" class="card-link btn btn-outline-primary">View Product</a>
+        <a href="#" class="card-link btn btn-primary">Add to Cart</a>
+      {% endif %}
+    </div>
+  </div>
+    {% endblock content %}

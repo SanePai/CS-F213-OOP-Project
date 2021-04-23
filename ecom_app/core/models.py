@@ -4,7 +4,7 @@ from django.urls import reverse
 
 # Create your models here.
 class Product(models.Model):
-    seller = models.ForeignKey(User, on_delete = models.CASCADE)
+    seller = models.ForeignKey(User, on_delete = models.CASCADE, related_name="seller")
     date_posted = models.DateTimeField(auto_now_add=True)
     stock = models.IntegerField(default=0)
     title = models.CharField(max_length=255)
@@ -14,7 +14,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
-        
+
     def get_absolute_url(self):
-        return reverse('post-detail', kwargs={'pk': self.pk})
+        return reverse('prod-detail', kwargs={'pk': self.pk})
     

@@ -26,7 +26,7 @@
             <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ prod.content }}</p>
         </div>
         <div class='card-footer'>
-            <a href="#" class="card-link btn btn-outline-primary">View Product</a>
+            <a href="{% url 'prod-detail' prod.id %}" class="card-link btn btn-outline-primary">View Product</a>
             <a href="#" class="card-link btn btn-primary">Add to Cart</a>
         </div>
       </div>
