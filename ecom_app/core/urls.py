@@ -11,7 +11,7 @@ from core.views import (
     )
 urlpatterns = [
     path('', ProductListView.as_view(), name = "app-home"),
-    path('user/<str:username>', SellerProductListView.as_view(), name='seller-prods'),
+    path('vendor/<str:username>', SellerProductListView.as_view(), name='seller-prods'),
     path('product/<int:pk>/', ProductDetailView.as_view(), name='prod-detail'),
     path('product/new/', ProductCreateView.as_view(), name='prod-create'),
     path('product/<int:pk>/update/', ProductUpdateView.as_view(), name='prod-update'),
