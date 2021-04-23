@@ -43,14 +43,13 @@ class ProductCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         return super().form_valid(form)
 
     def test_func(self):
-        if (self.request.user.profile.user_type == "WHOLESALER") or (self.request.user.profile.user_type == "RETAILER"):
-            return True 
-        return False
-
+        return (self.request.user.profile.user_type == "WHOLESALER") or (self.request.user.profile.user_type == "RETAILER")
 
 class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Product
-    fields = ['title', 'content']
+    fields = ['title', 'content', 'stock']
+    template_name = 'core/prod_update.html'
+    context_object_name = 'prod'
 
     def form_valid(self, form):
         form.instance.author = self.request.user

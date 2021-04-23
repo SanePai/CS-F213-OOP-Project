@@ -1,0 +1,25 @@
+{% extends "core/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<center>
+    <div class="content-section w-25 align-items-center"  style="position:relative;top:3em;">
+       <form method="POST">
+           <legend class="border-bottom mb-4">Edit prodcut - {{ prod.title }}</legend>
+          {% csrf_token %}
+          <div class="form-outline mb-4">
+            <input name="title" type="text" id="form1Example1" class="form-control" placeholder="{{ prod.title }}"/>
+         </div>
+          <div class="form-outline mb-4">
+             <input name="content" type="text" id="form1Example1" class="form-control" placeholder="{% if prod.content != '' %}{{ prod.content }}{% else %}No Description given{% endif %}"/>
+          </div>
+          <div class="form-outline mb-4">
+            <input name="stock" type="number" id="form1Example1" class="form-control" placeholder="{{ prod.stock }}"/>
+         </div>
+         <!-- Submit button -->
+          <button type="submit" value="Save" class="btn btn-primary btn-block">Update product</button>
+       </form>
+       <br>
+</div>
+</center>
+{% endblock content %}
