@@ -28,8 +28,8 @@
             </select>
          </div>
 
-         <div class="form-outline mb-4">
-            <select name="measurment_unit" class="form-control">
+         <div class="form-group form-outline mb-4">
+            <select name="measurment_unit" class="form-control custom-select">
                <option value="kg" selected>Kilograms</option>
                <option value="lb">Pounds(lb)</option>
                <option value="no">Number (Individual pieces)</option>
@@ -39,6 +39,10 @@
 
          <div class="form-outline mb-4">
             <input name="price_per_unit" type="number" step = "0.01" min="0" id="form1Example1" class="form-control" placeholder="Price Per Unit in Rupees"/>
+         </div>
+
+         <div class="form-outline mb-4">
+            <input type="file" class= "form-control" name="img" accept="image/*" id="id_img">
          </div>
          <!-- Submit button -->
           <button type="submit" class="btn btn-primary btn-block">Add product</button>

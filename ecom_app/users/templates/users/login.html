@@ -6,12 +6,22 @@
   <div class="content-section w-25 align-items-center"  style="position:relative;top:3em;">
      <form method="POST">
         {% csrf_token %}
-        <div class="form-outline mb-4">
-           <input name="username" type="text" id="form1Example1" class="form-control" placeholder="Username"/>
+        <div class="text-danger">
+           {{form.non_field_errors.as_text}}
         </div>
-        <div class="form-outline mb-4">
-           <input name="password" type="password" id="form1Example2" class="form-control" placeholder="Password" />
-        </div>
+        <div class="form-outline mb-4 has-error ">
+           <small id="usernameHelp" class="text-danger">
+              {{form.errors.username.as_text}}
+           </small>
+           <input name="username" type="text" id="form1Example1" class="form-control {% if form.errors.username or form.non_field_errors %}border border-danger{% endif %}" required placeholder="Username"/>
+         </div>
+         <div class="form-outline mb-4">
+            <small id="passwordHelp" class="text-danger" style="list-style-type: none;">
+               {{form.errors.password.as_text}}
+            </small>
+            <input name="password" type="password" id="form1Example2" class="form-control {% if form.errors.password or form.non_field_errors %}border border-danger{% endif %}" required placeholder="Password" />
+         </div>
+
         <div class="row mb-4">
            <div class="col d-flex justify-content-center">
               <div class="form-check">
