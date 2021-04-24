@@ -6,6 +6,7 @@ from django.contrib.auth import logout
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from .models import Product
 from django.db.models import Q
 from django.views.generic import (
@@ -93,3 +94,6 @@ def search(request):
         results = Product.objects.filter(Q(title__icontains=search_q) | Q(content__icontains=search_q))
         return render(request, 'core/home.html', context = {"prods": results})
 
+@login_required
+def cart(request):
+    return render(request, 'core/cart.html', {})

@@ -2,6 +2,7 @@ from django.urls import path, include
 from ecom_app import settings
 from django.conf.urls.static import static
 from core.views import (
+    cart,
     ProductListView,
     ProductCreateView,
     SellerProductListView,
@@ -12,6 +13,7 @@ from core.views import (
     )
 urlpatterns = [
     path('', ProductListView.as_view(), name = "app-home"),
+    path('cart/', cart, name = "cart"),
     path('vendor/<str:username>', SellerProductListView.as_view(), name='seller-prods'),
     path('product/<int:pk>/', ProductDetailView.as_view(), name='prod-detail'),
     path('product/new/', ProductCreateView.as_view(), name='prod-create'),
