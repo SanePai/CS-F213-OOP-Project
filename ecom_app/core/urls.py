@@ -10,10 +10,14 @@ from core.views import (
     ProductDeleteView,
     ProductUpdateView,
     ProductDetailView,
-    search
+    search,
+    checkout,
+    address_helper,
+    home_view,
     )
 urlpatterns = [
     path('', ProductListView.as_view(), name = "app-home"),
+    path('product/<str:tags>', home_view.as_view(), name = "home-view"),
     path('cart/', cart, name = "cart"),
     path('update-item/', update_item, name = "update-item"),
     path('vendor/<str:username>', SellerProductListView.as_view(), name='seller-prods'),
@@ -21,5 +25,7 @@ urlpatterns = [
     path('product/new/', ProductCreateView.as_view(), name='prod-create'),
     path('product/<int:pk>/update/', ProductUpdateView.as_view(), name='prod-update'),
     path('product/<int:pk>/delete/', ProductDeleteView.as_view(template_name = 'core/prod_confirm_delete.html'), name='prod-delete'),
-    path('search', search)
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('search', search),
+    path('checkout', checkout),
+    path('address_help', address_helper),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

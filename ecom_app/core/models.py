@@ -29,7 +29,7 @@ class Product(models.Model):
     stock = models.DecimalField(max_digits=20, decimal_places=2, default=0.00, validators=[MinValueValidator(Decimal('0.00'))])
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True, null=True)
-    img = models.ImageField(default = "default.png", upload_to = "product_imgs/", blank=True, null=True)
+    img = models.FileField(default = "default.png", upload_to = "", blank=True, null=True)
     rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.00, validators=[MinValueValidator(Decimal('0.00'))])
     tags = models.CharField(
         max_length = 20,

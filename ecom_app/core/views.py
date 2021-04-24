@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 import datetime
+from django.http import HttpResponse
 from .models import Product
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
@@ -32,11 +33,22 @@ class ProductListView(ListView):
     ordering = ['-date_posted']
     paginate_by = 3
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['cartItems'] = cartItems
-    #     return context
+# def home_view(request):
+#     if request.method == 'GET':
+#         tags = get_object_or_404(Product, tags=self.kwargs.get('tags'))
+#         prods = Product.objects.filter(seller=tags).order_by('-date_posted')
+#         return render(request, 'core/home.html', { 'prods' : prods })
 
+class home_view(ListView):
+    model = Product
+    template_name = 'core/home.html'
+    context_object_name = 'prods'
+    paginate_by = 20
+    def get_queryset(self):
+        tags = self.kwargs['tags']
+        print(tags)
+        return Product.objects.filter(tags=tags).order_by('-date_posted')
+ 
 
 def logout_view(request):
     logout(request)
@@ -102,6 +114,29 @@ def search(request):
         search_q = form.get('search').lower()
         results = Product.objects.filter(Q(title__icontains=search_q) | Q(content__icontains=search_q) | Q(tags__icontains=search_q))
         return render(request, 'core/home.html', context = {"prods": results})
+
+def checkout(request):
+    if request.method == 'GET':
+        return render(request, 'core/checkout.html')
+    
+    if request.method == 'POST':
+        form = request.POST
+        # Process order here
+        return render(request, 'core/order_successful.html', context = {})
+
+def address_helper(request):
+    if request.method == 'GET':
+        return HttpResponse('Hey')
+
+    if request.method == 'POST':
+        countryArr = {"United States":["Alaska", "Alabama", "Arkansas", "American Samoa", "Arizona", "California", "Colorado", "Connecticut", "District ", "of Columbia", "Delaware", "Florida", "Georgia", "Guam", "Hawaii", "Iowa", "Idaho", "Illinois", "Indiana", "Kansas", "Kentucky", "Louisiana", "Massachusetts", "Maryland", "Maine", "Michigan", "Minnesota", "Missouri", "Mississippi", "Montana", "North Carolina", "North Dakota", "Nebraska", "New Hampshire", "New Jersey", "New Mexico", "Nevada", "New York", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Virginia", "Virgin Islands", "Vermont", "Washington", "Wisconsin", "West Virginia", "Wyoming"]
+, "India":["Andhra Pradesh","Arunachal Pradesh ","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jammu and Kashmir","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Andaman and Nicobar Islands","Chandigarh","Dadra and Nagar Haveli","Daman and Diu","Lakshadweep","National Capital Territory of Delhi","Puducherry"]}
+        req_country = request.POST.get("country")
+        response = "<label>State</label><select class=\"custom-select d-block w-100\" id=\"state\" name=\"state\">"
+        for x in countryArr[req_country]:
+            response += "<option>" + x + "</option>"
+        response += "</select>"
+        return HttpResponse(response)
 
 @login_required
 # @user_passes_test(user_check)
