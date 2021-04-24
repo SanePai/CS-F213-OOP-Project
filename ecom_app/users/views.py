@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.core.exceptions import PermissionDenied
 
 def updateProfile(request, username):
     user = request.user
@@ -29,8 +30,12 @@ def updateProfile(request, username):
         # update_session_auth_hash(request, user)
         print("Saved user profile!")
         messages.success(request, f'Profile updated succesfully!')
+        if user.username != username:
+            raise PermissionDenied()
         return render(request, 'users/update_profile.html', {'user': user, "username":username})
     if request.method=="GET":
+        if user.username != username:
+            raise PermissionDenied()
         return render(request, 'users/update_profile.html', {'user': user, "username":username})
 
 def register(request):
@@ -66,4 +71,6 @@ class OrderByUser(LoginRequiredMixin, ListView):
             username = url.split("/")[-3]
             context = super().get_context_data(**kwargs)
             context['username'] = username
+            if self.kwargs['username'] != self.request.user.username:
+                raise PermissionDenied()
             return context
