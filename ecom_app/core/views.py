@@ -18,17 +18,13 @@ from django.views.generic import (
     DeleteView
 )
 
-prods = Product.objects.all()
 class ProductListView(ListView):
     model = Product
     template_name = 'core/home.html'
     context_object_name = 'prods'
     ordering = ['-date_posted']
-    paginate_by = 20
+    paginate_by = 3
 
-def home_view(request):
-    profile = User.objects.filter(username = request.user.username).first()
-    return render(request, 'core/home.html', context = {"prods": prods})
 
 def logout_view(request):
     logout(request)
@@ -47,7 +43,7 @@ class ProductCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Product
-    fields = ['title', 'content', 'stock']
+    fields = ['title', 'content', 'img', 'stock', 'tags', 'measurment_unit', 'price_per_unit']
     template_name = 'core/prod_update.html'
     context_object_name = 'prod'
 
@@ -91,8 +87,8 @@ class ProductDetailView(DetailView):
 def search(request):
     if request.method == 'POST':
         form = request.POST
-        search_q = form.get('search')
-        results = Product.objects.filter(Q(title__icontains=search_q) | Q(content__icontains=search_q))
+        search_q = form.get('search').lower()
+        results = Product.objects.filter(Q(title__icontains=search_q) | Q(content__icontains=search_q) | Q(tags__icontains=search_q))
         return render(request, 'core/home.html', context = {"prods": results})
 
 def checkout(request):
