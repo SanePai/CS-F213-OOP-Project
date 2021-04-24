@@ -76,6 +76,12 @@ class SellerProductListView(ListView):
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return Product.objects.filter(seller=user).order_by('-date_posted')
+    
+    def get_context_data(self, **kwargs):
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        context = super().get_context_data(**kwargs)
+        context['seller'] = user
+        return context
 
 class ProductDetailView(DetailView):
     model = Product

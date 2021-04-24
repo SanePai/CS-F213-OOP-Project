@@ -1,9 +1,18 @@
 {% extends "core/base.html" %}
 
 {% block content %}
-    <div>
-      <a href="/product/new" class="btn btn-outline-primary mt-1 mb-1">Add Product</a>
+    {% if request.user == seller %}
+      <div>
+        <div class="border-bottom pt-3">
+          <h2 >My Products</h2>
+        </div>
+        <a href="/product/new" class="btn btn-outline-primary mt-1 mb-1">Add Product</a>
+      </div>
+    {% else %}
+    <div class="border-bottom pt-3">
+      <h2 >All products by {{ seller }}</h2>
     </div>
+    {% endif %}
     {% for prod in prods %}
     <div class="card mr-3" style="top:1rem; left: 1rem; width: 20rem; margin-right: 0.5rem; ">
         <a href="#">
@@ -16,12 +25,18 @@
             <small class = 'text-muted'>Stock: {{ prod.stock }}</small>
             <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ prod.content }}</p>
         </div>
-        <div class='card-footer'>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="/product/{{ prod.id }}/update">Update or add stock</a>
-            <a class="btn btn-danger btn-sm mt-1 mb-1" href="/product/{{ prod.id }}/delete">Delete</a>
+        <div class="card-footer">
+        {% if prod.seller == user %}
+          <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'prod-update' prod.id %}">Update or add stock</a>
+          <a class="btn btn-danger btn-sm mt-1 mb-1" href="/product/{{ object.id }}/delete">Delete</a>
+        {% else %}
+          <a href="#" class="card-link btn btn-outline-primary">View Product</a>
+          <a href="#" class="card-link btn btn-primary">Add to Cart</a>
+        {% endif %}
         </div>
       </div>
     {% endfor %}
+    
     
     
     {% if is_paginated %}
