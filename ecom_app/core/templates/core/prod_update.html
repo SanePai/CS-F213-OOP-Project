@@ -16,6 +16,29 @@
           <div class="form-outline mb-4">
             <input name="stock" type="number" class="form-control" value="{{ prod.stock }}"/>
          </div>
+         <div class="form-outline mb-4">
+            <select name="tags" class="form-control" value = "{{ prod.tags }}">
+               <option value="veg" selected>Vegetables</option>
+               
+               <option value="fruit">Fruits</option>
+               
+               <option value="groc">Groceries</option>
+            </select>
+         </div>
+
+         <div class="form-outline mb-4">
+            <select name="measurment_unit" class="form-control" value = "{{ prod.measurment_unit }}">
+               <option value="kg" selected>Kilograms</option>
+               <option value="lb">Pounds(lb)</option>
+               <option value="no">Number (Individual pieces)</option>
+               <option value="bags">Bags</option>
+            </select>
+         </div>
+
+         <div class="form-outline mb-4">
+            <input name="price_per_unit" type="number" step = "0.01" min="0" id="form1Example1" class="form-control" value = "{{ prod.price_per_unit }}"/>
+         </div>
+
          <!-- Submit button -->
           <button type="submit" value="Save" class="btn btn-primary btn-block">Update product</button>
        </form>

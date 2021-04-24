@@ -1,6 +1,9 @@
 {% extends "core/base.html" %}
 
 {% block content %}
+    <div>
+      <a href="/product/new" class="btn btn-outline-primary mt-1 mb-1">Add Product</a>
+    </div>
     {% for prod in prods %}
     <div class="card mr-3" style="top:1rem; left: 1rem; width: 20rem; margin-right: 0.5rem; ">
         <a href="#">

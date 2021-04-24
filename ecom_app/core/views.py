@@ -33,7 +33,7 @@ def logout_view(request):
 
 class ProductCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Product
-    fields = ['title', 'content', 'img', 'stock']
+    fields = ['title', 'content', 'img', 'stock', 'tags', 'measurment_unit', 'price_per_unit']
     success_url = '/'
 
     def form_valid(self, form):
