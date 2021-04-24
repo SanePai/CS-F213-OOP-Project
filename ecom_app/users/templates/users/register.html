@@ -9,11 +9,15 @@
 
 let apiKey = '93d31cb364acb00261a913aab8d833f88efcc76408376f4a89718187';
 json(`https://api.ipdata.co?api-key=${apiKey}`).then(data => {
-  console.log(data.ip);
-  console.log(data.city);
-  console.log(data.country_code);
+  //console.log(data.ip);
+  //console.log(data.region);
+  //console.log(data.country_name);
   user_loc = data.city;
+  user_state = data.region;
+  user_country = data.country_name;
   document.getElementById("userloc").value = user_loc;
+  document.getElementById("userstate").value = user_loc;
+  document.getElementById("usercountry").value = user_loc;
 });
 </script>
 <center>
@@ -21,6 +25,8 @@ json(`https://api.ipdata.co?api-key=${apiKey}`).then(data => {
        <form method="POST">
           {% csrf_token %}
           <input type="hidden" name="location" value="" id="userloc">
+          <input type="hidden" name="state" value="" id="userstate">
+          <input type="hidden" name="country" value="" id="usercountry">
           <div class="form-outline mb-4">
             <input name="username" type="text" id="form1Example1" class="form-control" placeholder="Username"/>
          </div>
