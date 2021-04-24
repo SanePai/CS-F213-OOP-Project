@@ -12,9 +12,11 @@ from core.views import (
     search,
     checkout,
     address_helper,
+    home_view,
     )
 urlpatterns = [
     path('', ProductListView.as_view(), name = "app-home"),
+    path('product/<str:tags>', home_view.as_view(), name = "home-view"),
     path('cart/', cart, name = "cart"),
     path('vendor/<str:username>', SellerProductListView.as_view(), name='seller-prods'),
     path('product/<int:pk>/', ProductDetailView.as_view(), name='prod-detail'),

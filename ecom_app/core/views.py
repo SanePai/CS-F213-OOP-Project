@@ -25,6 +25,22 @@ class ProductListView(ListView):
     ordering = ['-date_posted']
     paginate_by = 3
 
+# def home_view(request):
+#     if request.method == 'GET':
+#         tags = get_object_or_404(Product, tags=self.kwargs.get('tags'))
+#         prods = Product.objects.filter(seller=tags).order_by('-date_posted')
+#         return render(request, 'core/home.html', { 'prods' : prods })
+
+class home_view(ListView):
+    model = Product
+    template_name = 'core/home.html'
+    context_object_name = 'prods'
+    paginate_by = 20
+    def get_queryset(self):
+        tags = self.kwargs['tags']
+        print(tags)
+        return Product.objects.filter(tags=tags).order_by('-date_posted')
+ 
 
 def logout_view(request):
     logout(request)
