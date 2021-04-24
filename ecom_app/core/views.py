@@ -20,9 +20,9 @@ from django.views.generic import (
 class ProductListView(ListView):
     model = Product
     template_name = 'core/home.html'
-    # context_object_name = 'prods'
+    context_object_name = 'prods'
     ordering = ['-date_posted']
-    paginate_by = 2
+    paginate_by = 3
 
 
 def logout_view(request):

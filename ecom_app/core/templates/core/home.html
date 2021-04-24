@@ -13,9 +13,7 @@
 
 
 {% block content %}
-{% if user.profile.user_type == "CUSTOMER" or not user.is_authenticated %}
     {% for prod in prods %}
-      {% if prod.seller.profile.user_type == "RETAILER" %}
         <div class="card mr-3" style="position: relative; top:1rem; left: 1rem; width: 20rem; margin-right: 0.5rem; margin-bottom: 0.5rem;">
             <a href="#">
                 <img src="{{ prod.img.url }}" class="card-img-top" alt="Product image">
@@ -32,57 +30,7 @@
                 <a href="#" class="card-link btn btn-primary">Add to Cart</a>
             </div>
           </div>  
-      {% endif %}
-    {% endfor %}
-{% endif %}
-    
-{% if user.profile.user_type == "RETAILER"%}
-    {% for prod in prods %}
-      {% if prod.seller.profile.user_type == "WHOLESALER" %}
-        <div class="card mr-3" style="top:1rem; left: 1rem; width: 20rem; margin-right: 0.5rem; margin-bottom: 0.5em;">
-            <a href="#">
-                <img src="{{ prod.img.url }}" class="card-img-top" alt="Product image">
-            </a>
-            <div class="card-body">
-                <a style="text-decoration: none; color:inherit" href="#">
-                    <h5 class="card-title">{{ prod.title }}</h5>
-                </a>
-                <a class="card-subtitle text-muted" href="#">Sold by: {{ prod.seller }}</a>
-                <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ prod.content }}</p>
-            </div>
-            <div class='card-footer'>
-                <a href="{% url 'prod-detail' prod.id %}" class="card-link btn btn-outline-primary">View Product</a>
-                <a href="#" class="card-link btn btn-primary">Add to Cart</a>
-            </div>
-          </div>  
-      {% endif %}
-    {% endfor %}
-{% endif %}
-
-    
-{% if request.user.profile.user_type == "WHOLESALER" %}
-    {% for prod in prods %}
-      {% if prod.seller.profile.user_type == "WHOLESALER" %}
-        <div class="card mr-3" style="top:1rem; left: 1rem; width: 20rem; margin-right: 0.5rem; ">
-            <a href="#">
-                <img src="{{ prod.img.url }}" class="card-img-top" alt="Product image">
-            </a>
-            <div class="card-body">
-                <a style="text-decoration: none; color:inherit" href="#">
-                    <h5 class="card-title">{{ prod.title }}</h5>
-                </a>
-                <a class="card-subtitle text-muted" href="#">Sold by: {{ prod.seller }}</a>
-                <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ prod.content }}</p>
-            </div>
-            <div class='card-footer'>
-                <a href="{% url 'prod-detail' prod.id %}" class="card-link btn btn-outline-primary">View Product</a>
-                <a href="#" class="card-link btn btn-primary">Add to Cart</a>
-            </div>
-          </div>  
-      {% endif %}
-    {% endfor %}
-{% endif %}
-
+      {% endfor %}
     
     {% if is_paginated %}
           <div class="row border-top pt-3" style="display: inline; margin-top: 4rem;">
@@ -92,7 +40,7 @@
               <a class="mr-3" href="?page={{ page_obj.previous_page_number }}">Previous</a>
             {% endif %}
             
-            {% for num in (widthratio prods.count 2 1) %}
+            {% for num in page_obj.paginator.page_range %}
               {% if page_obj.number == num %}
                 <a class="" href="?page={{ num }}">{{ num }}</a>
               {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
