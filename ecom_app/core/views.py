@@ -22,22 +22,19 @@ from core.models import Order, OrderItem
 import json
 
 class ProductListView(ListView):
-    # customer = self.request.user
-    # order, created = Order.objects.get_or_create(customer = customer)
-    # items = order.orderitem_set.all()
-    # cartItems = order.get_cart_items
-
     model = Product
     template_name = 'core/home.html'
     context_object_name = 'prods'
     ordering = ['-date_posted']
     paginate_by = 3
-
-# def home_view(request):
-#     if request.method == 'GET':
-#         tags = get_object_or_404(Product, tags=self.kwargs.get('tags'))
-#         prods = Product.objects.filter(seller=tags).order_by('-date_posted')
-#         return render(request, 'core/home.html', { 'prods' : prods })
+    
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        customer = self.request.user
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        cartItems = order.get_cart_items
+        context['cartItems'] = cartItems
+        return context
 
 class home_view(ListView):
     model = Product

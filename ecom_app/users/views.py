@@ -30,12 +30,12 @@ def updateProfile(request, username):
         # update_session_auth_hash(request, user)
         print("Saved user profile!")
         messages.success(request, f'Profile updated succesfully!')
-        if user.username != username:
-            raise PermissionDenied()
+        # if user.username != username:
+        #     raise PermissionDenied()
         return render(request, 'users/update_profile.html', {'user': user, "username":username})
     if request.method=="GET":
-        if user.username != username:
-            raise PermissionDenied()
+        # if user.username != username:
+        #     raise PermissionDenied()
         return render(request, 'users/update_profile.html', {'user': user, "username":username})
 
 def register(request):
