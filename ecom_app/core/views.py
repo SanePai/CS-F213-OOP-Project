@@ -97,7 +97,8 @@ def checkout(request):
     
     if request.method == 'POST':
         form = request.POST
-        return render(request, 'core/order_success.html', context = {})
+        # Process order here
+        return render(request, 'core/order_successful.html', context = {})
 
 def address_helper(request):
     if request.method == 'GET':
