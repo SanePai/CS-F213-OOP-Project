@@ -6,9 +6,9 @@ from decimal import Decimal
 
 
 CAT_CHOICES = (
-    ("veg", "Vegetables"),
-    ("fruit", "Fruits"),
-    ("groc", "Groceries"),
+    ("vegetables", "Vegetables"),
+    ("fruits", "Fruits"),
+    ("groceries", "Groceries"),
 )
 
 UNIT_CHOICES = (
@@ -34,7 +34,7 @@ class Product(models.Model):
     tags = models.CharField(
         max_length = 20,
         choices = CAT_CHOICES,
-        default = 'veg',
+        default = 'vegetables',
     )
     measurment_unit = models.CharField(
         max_length = 5,

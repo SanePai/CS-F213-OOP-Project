@@ -90,8 +90,8 @@ class ProductDetailView(DetailView):
 def search(request):
     if request.method == 'POST':
         form = request.POST
-        search_q = form.get('search')
-        results = Product.objects.filter(Q(title__icontains=search_q) | Q(content__icontains=search_q))
+        search_q = form.get('search').lower()
+        results = Product.objects.filter(Q(title__icontains=search_q) | Q(content__icontains=search_q) | Q(tags__icontains=search_q))
         return render(request, 'core/home.html', context = {"prods": results})
 
 @login_required
