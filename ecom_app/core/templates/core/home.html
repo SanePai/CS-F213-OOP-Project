@@ -39,7 +39,7 @@
 {% if user.profile.user_type == "RETAILER"%}
     {% for prod in prods %}
       {% if prod.seller.profile.user_type == "WHOLESALER" %}
-        <div class="card mr-3" style="top:1rem; left: 1rem; width: 20rem; margin-right: 0.5rem; ">
+        <div class="card mr-3" style="top:1rem; left: 1rem; width: 20rem; margin-right: 0.5rem; margin-bottom: 0.5em;">
             <a href="#">
                 <img src="{{ prod.img.url }}" class="card-img-top" alt="Product image">
             </a>
