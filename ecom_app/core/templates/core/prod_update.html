@@ -4,9 +4,10 @@
 
 <center>
     <div class="content-section w-25 align-items-center"  style="position:relative;top:3em;">
-       <form method="POST">
+       <form method="POST" enctype="multipart/form-data">
            <legend class="border-bottom mb-4">Edit prodcut - {{ prod.title }}</legend>
           {% csrf_token %}
+          {{ form.errors }}
           <div class="form-outline mb-4">
             <input name="title" type="text" value="{{ prod.title }}" class="form-control" />
          </div>
@@ -18,11 +19,11 @@
          </div>
          <div class="form-outline mb-4">
             <select name="tags" class="form-control" value = "{{ prod.tags }}">
-               <option value="veg" selected>Vegetables</option>
+               <option value="vegetables" selected>Vegetables</option>
                
-               <option value="fruit">Fruits</option>
+               <option value="fruits">Fruits</option>
                
-               <option value="groc">Groceries</option>
+               <option value="groceries">Groceries</option>
             </select>
          </div>
 
@@ -40,7 +41,7 @@
          </div>
 
          <div class="form-outline mb-4">
-            <input type="file" name="img" id="form1Example1" class="form-control" value="{{ prod.img.url }}" accept="image/*">
+            <input type="file" name="img" id="form1Example1" class="form-control" accept="image/*">
          </div>
          <!-- Submit button -->
           <button type="submit" value="Save" class="btn btn-primary btn-block">Update product</button>

@@ -5,7 +5,7 @@
 <center>
    {{ form.errors }}
     <div class="content-section w-25 align-items-center"  style="position:relative;top:3em;">
-       <form method="POST">
+       <form method="POST" enctype="multipart/form-data">
            <legend class="border-bottom mb-4">Add a prodcut</legend>
           {% csrf_token %}
           <div class="form-outline mb-4">
@@ -20,11 +20,11 @@
 
          <div class="form-outline mb-4">
             <select name="tags" class="form-control">
-               <option value="veg" selected>Vegetables</option>
+               <option value="vegetables" selected>Vegetables</option>
                
-               <option value="fruit">Fruits</option>
+               <option value="fruits">Fruits</option>
                
-               <option value="groc">Groceries</option>
+               <option value="groceries">Groceries</option>
             </select>
          </div>
 
@@ -42,7 +42,7 @@
          </div>
 
          <div class="form-outline mb-4">
-            <input type="file" class= "form-control" name="img" accept="image/*" id="id_img">
+            <input type="file" name="img" id="form1Example1" class="form-control" accept="image/*">
          </div>
          <!-- Submit button -->
           <button type="submit" class="btn btn-primary btn-block">Add product</button>
