@@ -20,7 +20,6 @@ from django.views.generic import (
 )
 from core.models import Order, OrderItem
 import json
-from .forms import CheckoutForm
 
 class ProductListView(ListView):
     # customer = self.request.user
@@ -152,7 +151,7 @@ def address_helper(request):
 # @user_passes_test(user_check)
 def cart(request):
     customer = request.user
-    order, created = Order.objects.get_or_create(customer = customer, placed=False)
+    order, created = Order.objects.get_or_create(customer = customer, complete=False)
     items = order.orderitem_set.all()
     cartItems = order.get_cart_items
 
