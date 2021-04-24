@@ -15,6 +15,7 @@ from core.views import (
     address_helper,
     home_view,
     )
+import users
 urlpatterns = [
     path('', ProductListView.as_view(), name = "app-home"),
     path('product/<str:tags>', home_view.as_view(), name = "home-view"),

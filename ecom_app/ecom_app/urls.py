@@ -21,11 +21,14 @@ from users.forms import UserRegisterForm
 from users.views import register
 from django.conf.urls.static import static
 from ecom_app import settings
+import users.urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(core.urls)),
+    path('<str:username>/', include(users.urls)),
     path('register/', register, name='register'),
     path('login/', LoginView.as_view(template_name="users/login.html"), name='login'),
     path('logout/', LogoutView.as_view(template_name="users/logout.html"), name='logout'),
     path('accounts/', include('allauth.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

@@ -206,9 +206,9 @@ $(document).ready(function(){
               <div>
                 <h6 class="my-0">{{ item.product.title }}</h6>
                 {% if item.product.content %}
-                  <small class="text-muted" style="text-overflow: ellipsis;">{{ item.product.content }}</small>
+                  <small class="text-muted" style="text-overflow: ellipsis; overflow: hidden;">{{ item.product.content }}</small>
                 {% else %}
-                  <small class="text-muted" style="text-overflow: ellipsis;">No description</small>
+                  <small class="text-muted" style="text-overflow: ellipsis; overflow: hidden;">No description</small>
                 {% endif %}
                 </div>
               <span class="text-muted">{{ item.product.price_per_unit }}</span>
