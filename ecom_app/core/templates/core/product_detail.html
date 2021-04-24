@@ -33,7 +33,7 @@
         <div class="row product-gallery mx-1">
           <div class="col-12 mb-0">
             <figure class="view overlay rounded z-depth-1 main-img">
-              <a href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/15a.jpg"
+              <a href="{{ object.img.url }}"
                 data-size="710x823">
                 <img src="{{ object.img.url }}"
                   class="img-fluid z-depth-1" width="710" height="823">
@@ -59,6 +59,10 @@
             <tr>
               <th class="pl-0 w-25" scope="row"><strong>Available</strong></th>
               <td>{{ object.stock }}</td>
+            </tr>
+            <tr>
+              <th class="pl-0 w-25" scope="row"><strong>Rating </strong></th>
+              <td>{{ object.rating }}</td>
             </tr>
             <tr>
               <th class="pl-0 w-25" scope="row"><strong>Delivery</strong></th>
