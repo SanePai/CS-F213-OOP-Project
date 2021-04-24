@@ -12,7 +12,7 @@
                         <th><h5>Items: <strong>{{ order.get_cart_items }}</strong></h5></th>
                         <th><h5>Order Total: <strong>{{ order.get_cart_total|floatformat:2 }}</strong></h5></th>
                     <th>
-                        <a style = "float: right; margin: 0.5rem;" class="btn btn-success" href="/checkout">Checkout</a>
+                        <a style = "float: right; margin: 0.5rem;" class="btn btn-success {% if not order.get_cart_items %} disabled {%endif %}" href="/checkout">Checkout</a>
                     </th>
                     </tr>
                 </table>

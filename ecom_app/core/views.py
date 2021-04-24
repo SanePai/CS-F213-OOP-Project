@@ -20,6 +20,7 @@ from django.views.generic import (
 )
 from core.models import Order, OrderItem
 import json
+from .forms import CheckoutForm
 
 class ProductListView(ListView):
     # customer = self.request.user
@@ -118,7 +119,7 @@ def search(request):
 @login_required
 def checkout(request):
     if request.method == 'GET':
-        order = Order.objects.get(customer = request.user)
+        order = Order.objects.filter(customer = request.user, complete=False).first()
         orderitem = order.orderitem_set.all()
         cartItems = order.get_cart_items
         order_total = order.get_cart_total
@@ -126,10 +127,11 @@ def checkout(request):
     
     if request.method == 'POST':
         form = request.POST
-        print("here")
-        order = Order.objects.get(customer = request.user)
+        order = Order.objects.filter(customer = request.user, complete=False).first()
         order.placed = True
+        order.complete = True
         order.save()
+
         return render(request, 'core/order_successful.html', context = {})
 
 def address_helper(request):
@@ -150,7 +152,7 @@ def address_helper(request):
 # @user_passes_test(user_check)
 def cart(request):
     customer = request.user
-    order, created = Order.objects.get_or_create(customer = customer)
+    order, created = Order.objects.get_or_create(customer = customer, placed=False)
     items = order.orderitem_set.all()
     cartItems = order.get_cart_items
 

@@ -67,7 +67,7 @@ $(document).ready(function(){
                   <!--firstName-->
                   <div class="md-form">
                     <label>Name</label>
-                    <input type="text" id="firstName" class="form-control" placeholder="First Name">
+                    <input type="text" name="first_name" class="form-control" placeholder="First Name">
                   </div>
 
                 </div>
@@ -79,7 +79,7 @@ $(document).ready(function(){
                   <!--lastName-->
                   <div class="md-form">
                     <label></label>
-                    <input type="text" id="lastName" class="form-control" placeholder="Last Name">
+                    <input type="text" name="last_name" class="form-control" placeholder="Last Name">
                   </div>
 
                 </div>
@@ -127,7 +127,7 @@ $(document).ready(function(){
                 <div class="col-lg-4 col-md-6 mb-4">
 
                   <label for="zip">Zip</label>
-                  <input type="text" class="form-control" name="zip" placeholder="" required style="height:1.65em;">
+                  <input type="number" class="form-control" name="zip_code" placeholder="" required style="height:1.65em;">
 
                 </div>
                 <!--Grid column-->
@@ -138,7 +138,7 @@ $(document).ready(function(){
               <hr>
 
               <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="save-info">
+                <input type="checkbox" class="custom-control-input" name="save-info">
                 <label class="custom-control-label" for="save-info">Save this information for next time</label>
               </div>
 
@@ -158,39 +158,27 @@ $(document).ready(function(){
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="cc-name">Name on card</label>
-                  <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                  <input type="text" class="form-control" name="cc-name" placeholder="" >
                   <small class="text-muted">Full name as displayed on card</small>
-                  <div class="invalid-feedback">
-                    Name on card is required
-                  </div>
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="cc-number">Credit card number</label>
-                  <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                  <div class="invalid-feedback">
-                    Credit card number is required
-                  </div>
+                  <input type="text" class="form-control" name="cc-number" placeholder="" >
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-3 mb-3">
                   <label for="cc-expiration">Expiration</label>
-                  <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-                  <div class="invalid-feedback">
-                    Expiration date required
-                  </div>
+                  <input type="text" class="form-control" name="cc-expiration" placeholder="" >
                 </div>
                 <div class="col-md-3 mb-3">
                   <label for="cc-expiration">CVV</label>
-                  <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                  <div class="invalid-feedback">
-                    Security code required
-                  </div>
+                  <input type="text" class="form-control" name="cc-cvv" placeholder="" >
                 </div>
                 </div>
               </div>
               <hr class="mb-4">
-              <submit class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</submit>
+              <button type = "submit" class="btn btn-primary btn-lg btn-block">Continue to checkout</button>
 
             </form>
 
@@ -205,13 +193,13 @@ $(document).ready(function(){
 
           <!-- Heading -->
           <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-muted">Your cart</span>
+            <span class="text-muted">Your cart (Items: {{ cartItems }})</span>
+            
             <span class="badge badge-secondary badge-pill">3</span>
           </h4>
 
           <!-- Cart -->
           {% if cartItems %}
-          <p>{{ cartItems }}</p>
           {% for item in orderitem %}
           <ul class="list-group mb-3 z-depth-1">
             <li class="list-group-item d-flex justify-content-between lh-condensed">
