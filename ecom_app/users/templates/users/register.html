@@ -24,28 +24,50 @@ json(`https://api.ipdata.co?api-key=${apiKey}`).then(data => {
     <div class="content-section w-25 align-items-center"  style="position:relative;top:3em;">
        <form method="POST">
           {% csrf_token %}
+          {{ form.errors.non_field_errors }}
           <input type="hidden" name="location" value="" id="userloc">
           <input type="hidden" name="state" value="" id="userstate">
           <input type="hidden" name="country" value="" id="usercountry">
           <div class="form-outline mb-4">
-            <input name="username" type="text" id="form1Example1" class="form-control" placeholder="Username"/>
+            <small id="usernameHelp" class="text-danger">
+               {{form.errors.username.as_text}}
+            </small>
+            <input name="username" type="text" id="form1Example1" class="form-control {% if form.errors.username or form.non_field_errors %}border border-danger{% endif %}" placeholder="Username"/>
          </div>
           <div class="form-outline mb-4">
-             <input name="email" type="email" id="form1Example1" class="form-control" placeholder="Email"/>
+            <small id="usernameHelp" class="text-danger">
+               {{form.errors.email.as_text}}
+            </small>
+             <input name="email" type="email" id="form1Example1" class="form-control {% if form.errors.email or form.non_field_errors %}border border-danger{% endif %}" placeholder="Email"/>
           </div>
           <div class="form-outline mb-4">
-            <input name="first_name" type="text" id="form1Example1" class="form-control" placeholder="First name"/>
+            <small id="usernameHelp" class="text-danger">
+               {{form.errors.first_name.as_text}}
+            </small>
+            <input name="first_name" type="text" id="form1Example1" class="form-control {% if form.errors.first_name or form.non_field_errors %}border border-danger{% endif %}" placeholder="First name"/>
          </div>
          <div class="form-outline mb-4">
-            <input name="last_name" type="text" id="form1Example1" class="form-control" placeholder="Last name"/>
+            <small id="usernameHelp" class="text-danger">
+               {{form.errors.last_name.as_text}}
+            </small>
+            <input name="last_name" type="text" id="form1Example1" class="form-control {% if form.errors.last_name or form.non_field_errors %}border border-danger{% endif %}" placeholder="Last name"/>
          </div>
           <div class="form-outline mb-4">
-             <input name="password1" type="password" id="form1Example2" class="form-control" placeholder="Password" />
+            <small id="usernameHelp" class="text-danger">
+               {{form.errors.password1.as_text}}
+            </small>
+             <input name="password1" type="password" id="form1Example2" class="form-control {% if form.errors.password1 or form.non_field_errors %}border border-danger{% endif %}" placeholder="Password" />
           </div>
           <div class="form-outline mb-4">
-            <input name="password2" type="password" id="form1Example1" class="form-control" placeholder="Confirm password"/>
+            <small id="usernameHelp" class="text-danger">
+               {{form.errors.password2.as_text}}
+            </small>
+            <input name="password2" type="password" id="form1Example1" class="form-control {% if form.errors.password2 or form.non_field_errors %}border border-danger{% endif %}" placeholder="Confirm password"/>
          </div>
           <div class="column mb-4" style="width: max-content;">
+            <small id="usernameHelp" class="text-danger">
+               {{form.errors.user_type.as_text}}
+            </small>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="user_type" id="inlineRadio1" value="CUSTOMER">
                 <label class="form-check-label" for="inlineRadio1">Customer</label>
