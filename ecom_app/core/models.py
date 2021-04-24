@@ -55,6 +55,7 @@ class Order(models.Model):
     date_ordered = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=200, blank=True, null=True)
+    placed = models.BooleanField(default=False)
 
     @property
     def get_cart_total(self):
