@@ -10,9 +10,9 @@ def register(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            #user = User.objects.create(username=form.cleaned_data.get('username'), email=form.cleaned_data.get('username'), password=form.cleaned_data.get('username'),)
             user = User.objects.get(username=form.cleaned_data.get('username'))
-            profile = Profile.objects.create(user_type=form.cleaned_data.get('user_type'), user=user)
+            form2 = request.POST
+            profile = Profile.objects.create(user_type=form.cleaned_data.get('user_type'), user=user, location=form2.get('location'))
             profile.save()
             user.profile = profile
             user.save()

@@ -2,10 +2,25 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+<script>
+   function json(url) {
+  return fetch(url).then(res => res.json());
+}
+
+let apiKey = '93d31cb364acb00261a913aab8d833f88efcc76408376f4a89718187';
+json(`https://api.ipdata.co?api-key=${apiKey}`).then(data => {
+  console.log(data.ip);
+  console.log(data.city);
+  console.log(data.country_code);
+  user_loc = data.city;
+  document.getElementById("userloc").value = user_loc;
+});
+</script>
 <center>
     <div class="content-section w-25 align-items-center"  style="position:relative;top:3em;">
        <form method="POST">
           {% csrf_token %}
+          <input type="hidden" name="location" value="" id="userloc">
           <div class="form-outline mb-4">
             <input name="username" type="text" id="form1Example1" class="form-control" placeholder="Username"/>
          </div>
