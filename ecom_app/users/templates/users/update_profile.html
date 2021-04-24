@@ -39,6 +39,7 @@ $(document).ready(function(){
 {% endblock %}
 
 {% block content %}
+{% if user.username == username %}
   <!--Main layout-->
   <main>
     <div class="container wow fadeIn">
@@ -160,7 +161,7 @@ $(document).ready(function(){
     </div>
   </main>
   <!--Main layout-->
+{% endif %}
 
-  
 
   {% endblock content %}

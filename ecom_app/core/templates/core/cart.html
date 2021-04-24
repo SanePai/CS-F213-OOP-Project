@@ -31,17 +31,11 @@
                     </div>
                 </th></tr>
             {% for item in items %}
-<<<<<<< HEAD
             <tr>
                 <td>
                 <div class="row" style="margin-top: 1rem;">
                     <div style="flex:2;"><img class="row-img" style="border: 0.5px solid;" width="270" src="{{ item.product.img.url }}" alt="Product Image"></div>
                     <div style="flex:2">{{ item.product.title }}</div>
-=======
-                <div class="row">
-                    <div style="flex:2"><img class="row-img" src="{{ item.product.img.url }}" width="275" alt="Product Image"></div>
-                    <div style="flex:2">{{ item.prodcut.title }}</div>
->>>>>>> 8fb1ba96d5033d092b549b66213a50bb620e1298
                     <div style="flex:1">{{ item.product.price_per_unit | floatformat:2 }}</div>
                     <div style="flex: 1;">
                         <p class="quantity">{{ item.quantity }}</p>

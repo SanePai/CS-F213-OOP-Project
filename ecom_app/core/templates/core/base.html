@@ -54,8 +54,8 @@ const csrftoken = getToken('csrftoken');
                       My Account
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="/{{user.username}}">Profile</a></li>
-                      <li><a class="dropdown-item" href="#">Orders</a></li>
+                      <li><a class="dropdown-item" href="/u/{{user.username}}">Profile</a></li>
+                      <li><a class="dropdown-item" href="/u/{{user.username}}/orders">Orders</a></li>
                       {% if user.profile.user_type == 'WHOLESALER' or user.profile.user_type == 'RETAILER' %}
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="{% url 'seller-prods' user.username %}">Add/Edit products</a></li>

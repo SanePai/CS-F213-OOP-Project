@@ -5,15 +5,15 @@ from django.contrib.auth.models import User
 from users.models import Profile
 from django.views.generic import ListView
 from core.models import Order, Product
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 
-# ['username', 'email', 'first_name', 'last_name', 'password1', 'password2', 'user_type']
-# Create your views here.
-    
 def updateProfile(request, username):
     user = request.user
+    url = request.get_full_path()
+    username = url.split("/")[-2]
     if request.method == 'POST':
         form = request.POST
         user.first_name = form.get('first_name')
@@ -26,12 +26,12 @@ def updateProfile(request, username):
         p.save()
         user.profile = p
         user.save()
-        update_session_auth_hash(request, user)
+        # update_session_auth_hash(request, user)
         print("Saved user profile!")
         messages.success(request, f'Profile updated succesfully!')
-        return render(request, 'users/update_profile.html', {'user': user})
-
-    return render(request, 'users/update_profile.html', {'user': user})
+        return render(request, 'users/update_profile.html', {'user': user, "username":username})
+    if request.method=="GET":
+        return render(request, 'users/update_profile.html', {'user': user, "username":username})
 
 def register(request):
     if request.method == 'POST':

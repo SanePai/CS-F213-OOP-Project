@@ -26,7 +26,7 @@ import users.urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(core.urls)),
-    path('<str:username>/', include(users.urls)),
+    path('u/<str:username>/', include(users.urls)),
     path('register/', register, name='register'),
     path('login/', LoginView.as_view(template_name="users/login.html"), name='login'),
     path('logout/', LogoutView.as_view(template_name="users/logout.html"), name='logout'),
