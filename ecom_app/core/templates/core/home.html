@@ -27,7 +27,7 @@
             </div>
             <div class='card-footer'>
                 <a href="{% url 'prod-detail' prod.id %}" class="card-link btn btn-outline-primary">View Product</a>
-                <a href="#" class="card-link btn btn-primary">Add to Cart</a>
+                <button data-product = "{{ prod.id }}" data-action="add" class="btn btn-primary update-cart">Add to Cart</button>
             </div>
           </div>  
       {% endfor %}

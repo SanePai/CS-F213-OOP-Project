@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 import datetime
 from .models import Product
 from django.contrib.auth.models import User
@@ -6,7 +7,7 @@ from django.contrib.auth import logout
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Product
 from django.db.models import Q
 from django.views.generic import (
@@ -16,13 +17,25 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
+from core.models import Order, OrderItem
+import json
 
 class ProductListView(ListView):
+    # customer = self.request.user
+    # order, created = Order.objects.get_or_create(customer = customer)
+    # items = order.orderitem_set.all()
+    # cartItems = order.get_cart_items
+
     model = Product
     template_name = 'core/home.html'
     context_object_name = 'prods'
     ordering = ['-date_posted']
     paginate_by = 3
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['cartItems'] = cartItems
+    #     return context
 
 
 def logout_view(request):
@@ -91,5 +104,36 @@ def search(request):
         return render(request, 'core/home.html', context = {"prods": results})
 
 @login_required
+# @user_passes_test(user_check)
 def cart(request):
-    return render(request, 'core/cart.html', {})
+    customer = request.user
+    order, created = Order.objects.get_or_create(customer = customer)
+    items = order.orderitem_set.all()
+    cartItems = order.get_cart_items
+
+    return render(request, 'core/cart.html', {"items": items, "order": order})
+
+def update_item(request):
+    data = json.loads(request.body)
+    productId = data['productId']
+    action = data['action']
+    print("Action: ", action)
+    print("productId: ", productId)
+
+    customer = request.user
+    product = Product.objects.get(id=productId)
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+
+    if action == "add":
+        orderItem.quantity += 1
+    elif action == "remove":
+        orderItem.quantity -= 1
+    
+    orderItem.save()
+
+    if orderItem.quantity <= 0:
+        orderItem.delete()
+
+
+    return JsonResponse({"Data": " "})

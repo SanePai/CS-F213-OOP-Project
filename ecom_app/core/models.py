@@ -56,13 +56,35 @@ class Order(models.Model):
     complete = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=200, blank=True, null=True)
 
+    @property
+    def get_cart_total(self):
+        order_items = self.orderitem_set.all()
+        total = sum([item.get_total for item in order_items])
+        return total
+    
+    @property
+    def get_cart_items(self):
+        order_items = self.orderitem_set.all()
+        x = [item.quantity for item in order_items]
+        total = len(x)
+        return total
+
+
+
     def __str__(self):
         return str(self.id)
+
 
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    quantity = models.DecimalField(max_digits=3, decimal_places=2, default=0.00, validators=[MinValueValidator(Decimal('0.00'))])
+    quantity = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, validators=[MinValueValidator(Decimal('0.00'))])
+
+    @property
+    def get_total(self):
+        total = self.product.price_per_unit * self.quantity
+        return total
+
 
 class ShippingAddress(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -71,11 +93,10 @@ class ShippingAddress(models.Model):
     last_name = models.CharField(max_length=30)
     email = models.EmailField(blank=True, null=True)
     phone_num = models.PositiveIntegerField(blank=True, null=True)
-    address1 = models.CharField(max_length = 255)
-    address2 = models.CharField(max_length = 255, blank=True, null=True)
+    address = models.TextField()
     country = models.CharField(max_length = 30)
     state = models.CharField(max_length = 30)
     zip_code = models.PositiveIntegerField()
 
-    
+
 
