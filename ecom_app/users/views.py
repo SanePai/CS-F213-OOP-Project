@@ -73,4 +73,8 @@ class OrderByUser(LoginRequiredMixin, ListView):
             context['username'] = username
             if self.kwargs['username'] != self.request.user.username:
                 raise PermissionDenied()
+            customer = self.request.user
+            order, created = Order.objects.get_or_create(customer=customer, complete=False)
+            cartItems = order.get_cart_items
+            context['cartItems'] = cartItems
             return context

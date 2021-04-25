@@ -44,11 +44,19 @@ class home_view(ListView):
     template_name = 'core/home.html'
     context_object_name = 'prods'
     paginate_by = 20
+
     def get_queryset(self):
         tags = self.kwargs['tags']
         print(tags)
         return Product.objects.filter(tags=tags).order_by('-date_posted')
  
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        customer = self.request.user
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        cartItems = order.get_cart_items
+        context['cartItems'] = cartItems
+        return context
 
 def logout_view(request):
     logout(request)
@@ -65,6 +73,15 @@ class ProductCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def test_func(self):
         return (self.request.user.profile.user_type == "WHOLESALER") or (self.request.user.profile.user_type == "RETAILER")
 
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        customer = self.request.user
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        cartItems = order.get_cart_items
+        context['cartItems'] = cartItems
+        return context
+
+
 class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Product
     fields = ['title', 'content', 'img', 'stock', 'tags', 'measurment_unit', 'price_per_unit']
@@ -79,7 +96,13 @@ class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         product = self.get_object()
         return (self.request.user == product.seller)
 
-
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        customer = self.request.user
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        cartItems = order.get_cart_items
+        context['cartItems'] = cartItems
+        return context
 
 class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
@@ -88,6 +111,14 @@ class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         product = self.get_object()
         return (self.request.user == product.seller)
+
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        customer = self.request.user
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        cartItems = order.get_cart_items
+        context['cartItems'] = cartItems
+        return context
 
 class SellerProductListView(ListView):
     model = Product
@@ -103,10 +134,22 @@ class SellerProductListView(ListView):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         context = super().get_context_data(**kwargs)
         context['seller'] = user
+        customer = self.request.user
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        cartItems = order.get_cart_items
+        context['cartItems'] = cartItems
         return context
 
 class ProductDetailView(DetailView):
     model = Product
+
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        customer = self.request.user
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        cartItems = order.get_cart_items
+        context['cartItems'] = cartItems
+        return context
 
 def search(request):
     if request.method == 'POST':
@@ -189,6 +232,9 @@ def add_feedback(request, pk1, pk2):
     if order.customer != request.user:
         raise PermissionDenied()
     feedback, created = Feedback.objects.get_or_create(order=order, product=product, user=request.user)
+    customer = request.user
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    cartItems = order.get_cart_items
     if request.method == "POST":
         form = FeedbackForm(request.POST)
         if form.is_valid():
@@ -197,11 +243,11 @@ def add_feedback(request, pk1, pk2):
             feedback.save()
             messages.success(request, f"Thank you for providing feedback")
             return redirect('user-orders', feedback.user.username)
-        return render(request, 'core/prod_review.html', {"form": form, "created": created, "feedback": feedback})
+        return render(request, 'core/prod_review.html', {"form": form, "created": created, "feedback": feedback, "cartItems": cartItems})
 
     else:
         form = FeedbackForm()
-        return render(request, 'core/prod_review.html', {"form": form, "created": created, "feedback": feedback})
+        return render(request, 'core/prod_review.html', {"form": form, "created": created, "feedback": feedback, "cartItems": cartItems})
 
 @login_required
 def order_details(request, pk):
@@ -211,11 +257,14 @@ def order_details(request, pk):
     feedback_list = Feedback.objects.filter(order=order)
     if order.customer != request.user:
         raise PermissionDenied()
-
+    customer = request.user
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    cartItems = order.get_cart_items
     context = {
         "order_items": order_items,
         "order": order,
         "feedback_list": feedback_list
     }
+    context['cartItems'] = cartItems
 
     return render(request, 'core/order_detail.html', context = context)

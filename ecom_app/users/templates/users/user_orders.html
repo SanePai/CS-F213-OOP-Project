@@ -8,18 +8,15 @@
       </div>
       {% if request.user.username == username %}
     {% for order in prods %}
-      {% for order_item in order.orderitem_set.all %}
         <div class="card mr-3" style="top:1rem; left: 1rem; width: 20rem; margin-right: 0.5rem; ">
-            <a href="#">
-                <img src="{{ order_item.product.img.url }}" class="card-img-top" alt="Product image">
-            </a>
             <div class="card-body">
-                <a style="text-decoration: none; color:inherit" href="#">
-                    <h5 class="card-title">{{ order_item.product.title }}</h5>
+                <a style="text-decoration: none; color:inherit" href="/order/{{order.id}}">
+                    <h5 class="card-title">Order ID: {{ order.id }}</h5>
                 </a>
-                <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ order_item.product.content }}</p>
-            </div>
-        {% endfor %}
+                <p class="card-text">Number of items items: {{ order.get_cart_items }}</p>
+                <p class="card-text">Order Total: &#8377;{{ order.get_cart_total|floatformat:2 }}</p>
+              </div>
+            <a href="/order/{{order.id}}" class="btn btn-sm btn-outline-primary">View details</a>
         <div class="card-footer">
             <small class="text-muted">Order placed on: {{ order.date_ordered }}</small>
         </div>

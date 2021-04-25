@@ -4,7 +4,7 @@
   <!-- Navs for filtering based on type of product (using tags) -->
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link active" href="#">All</a>
+      <a class="nav-link active" href="/">All</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" style="text-decoration: none; color: inherit;" href="/product/vegetables">Vegetables</a>
@@ -21,18 +21,19 @@
 {% block content %}
     {% for prod in prods %}
         <div class="card mr-3" style="position: relative; top:1rem; left: 1rem; width: 20rem; margin-right: 0.5rem; margin-bottom: 0.5rem;">
-            <a href="#">
+            <a href="{% url 'prod-detail' prod.id %}">
                 <img src="{{ prod.img.url }}" class="card-img-top" alt="Product image">
             </a>
             <div class="card-body">
-                <a style="text-decoration: none; color:inherit" href="#">
+                <a style="text-decoration: none; color:inherit" href="{% url 'prod-detail' prod.id %}">
                     <h5 class="card-title">{{ prod.title }}</h5>
                     <p class="text-muted">Rating: {{prod.get_star_rating}} ({{ prod.number_of_ratings }} ratings)</p>
                 </a>
-                <a class="card-subtitle text-muted" href="#">Sold by: {{ prod.seller }}</a>
+                <a class="card-subtitle text-muted" href="{% url 'seller-prods' user.username %}">Sold by: {{ prod.seller }}</a>
                 <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ prod.content }}</p>
-            </div>
-            <div class='card-footer'>
+                <strong style="float: right;">Price: &#8377;{{ prod.price_per_unit }}</strong>
+              </div>
+              <div class='card-footer'>
                 <a href="{% url 'prod-detail' prod.id %}" class="card-link btn btn-outline-primary">View Product</a>
                 <button data-product = "{{ prod.id }}" data-action="add" class="btn btn-primary update-cart">Add to Cart</button>
             </div>

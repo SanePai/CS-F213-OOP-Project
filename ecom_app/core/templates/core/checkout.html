@@ -28,14 +28,6 @@ $(document).ready(function(){
 });
 </script>
 
-  <!-- Navs for filtering based on type of product (using tags) -->
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" href="#">All</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" style="text-decoration: none; color: inherit;" href="#">Books</a>
-    </li>
 {% endblock %}
 
 {% block content %}
@@ -67,7 +59,7 @@ $(document).ready(function(){
                   <!--firstName-->
                   <div class="md-form">
                     <label>Name</label>
-                    <input type="text" name="first_name" class="form-control" placeholder="First Name">
+                    <input type="text" name="first_name" class="form-control" placeholder="First Name" required>
                   </div>
 
                 </div>
@@ -79,7 +71,7 @@ $(document).ready(function(){
                   <!--lastName-->
                   <div class="md-form">
                     <label></label>
-                    <input type="text" name="last_name" class="form-control" placeholder="Last Name">
+                    <input type="text" name="last_name" class="form-control" placeholder="Last Name" required>
                   </div>
 
                 </div>
@@ -96,7 +88,7 @@ $(document).ready(function(){
               <!--address-->
               <div class="md-form mb-4">
                 <label for="address" class="">Address</label>
-                <input type="text" name="address" class="form-control" placeholder="1234 Main St">
+                <input type="text" name="address" class="form-control" placeholder="1234 Main St" required>
               </div>
 
               <!--Grid row-->
@@ -179,6 +171,8 @@ $(document).ready(function(){
               </div>
               <hr class="mb-4">
               <button type = "submit" class="btn btn-primary btn-lg btn-block">Continue to checkout</button>
+              <a class="btn btn-outline-dark btn-lg btn-block" href="{% url 'cart' %}">Return to cart</a>
+              <button type="reset" style="float:right" class="btn btn-danger btn-lg btn-block">Reset</button>
 
             </form>
 
@@ -206,9 +200,9 @@ $(document).ready(function(){
               <div>
                 <h6 class="my-0">{{ item.product.title }}</h6>
                 {% if item.product.content %}
-                  <small class="text-muted" style="text-overflow: ellipsis; overflow: hidden;">{{ item.product.content }}</small>
+                  <small class="text-muted" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ item.product.content }}</small>
                 {% else %}
-                  <small class="text-muted" style="text-overflow: ellipsis; overflow: hidden;">No description</small>
+                  <small class="text-muted" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"">No description</small>
                 {% endif %}
                 </div>
               <span class="text-muted">{{ item.product.price_per_unit }}</span>

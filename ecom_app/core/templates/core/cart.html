@@ -8,7 +8,7 @@
                 <br>
                 <div class="row" style="display: inline;">
                     <h5 style="display: inline;">Items: <strong>{{ order.get_cart_items }}</strong></h5>
-                    <h5 style="display: inline;">Order Total: <strong>{{ order.get_cart_total|floatformat:2 }}</strong></h5>
+                    <h5 style="display: inline;">Order Total: <strong>&#8377;{{ order.get_cart_total|floatformat:2 }}</strong></h5>
                     <a style="display: inline; margin-left: 1rem;"  href="{% url 'app-home' %}" class="btn btn-outline-dark">Continue Shopping</a>
                 </div>
                    
@@ -36,7 +36,7 @@
                 <div class="row" style="margin-top: 1rem;">
                     <div style="flex:2;"><img class="row-img" style="border: 0.5px solid;" height="200" src="{{ item.product.img.url }}" alt="Product Image"></div>
                     <div style="flex:2">{{ item.product.title }}</div>
-                    <div style="flex:1">{{ item.product.price_per_unit | floatformat:2 }}</div>
+                    <div style="flex:1">&#8377;{{ item.product.price_per_unit | floatformat:2 }}</div>
                     <div style="flex: 1;">
                         <p class="quantity">{{ item.quantity }}</p>
                         <div class="quantity">
@@ -44,7 +44,7 @@
                             <button data-product="{{ item.product.id }}" data-action="remove" class= "chg-quantity update-cart" alt="Decrease quantity"><i class="fas fa-angle-down"></i></button>
                         </div>
                     </div>
-                    <div style="flex: 1;">{{ item.get_total|floatformat:2 }}</div>
+                    <div style="flex: 1;">&#8377;{{ item.get_total|floatformat:2 }}</div>
                     </div>
                 </div>
             </td>

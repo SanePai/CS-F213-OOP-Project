@@ -8,11 +8,11 @@
                 <h2>Are you sure you want to delete this product?"</h2>
             </fieldset>
             <div class="card mr-3" style="top:1rem; width: 20rem; margin-right: 0.5rem; ">
-                <a href="#">
+                <a href="{% url 'prod-detail' prod.id %}">
                     <img src="{{ object.img.url }}" class="card-img-top" alt="Product image">
                 </a>
                 <div class="card-body">
-                    <a style="text-decoration: none; color:inherit" href="#">
+                    <a style="text-decoration: none; color:inherit" href="{% url 'prod-detail' prod.id %}">
                         <h5 class="card-title">{{ object.title }}</h5>
                     </a>
                     <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ prod.content }}</p>

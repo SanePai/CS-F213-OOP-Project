@@ -31,6 +31,6 @@ urlpatterns = [
     path('search', search),
     path('checkout', checkout),
     path('address_help', address_helper),
-    path('order/<int:pk>/', order_details, name="order-detials"),
+    path('order/<int:pk>/', order_details, name="order-details"),
     path('order/<pk1>/product/<int:pk2>/feedback', add_feedback, name= "order-feedback"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
