@@ -27,7 +27,7 @@
             <div class="card-body">
                 <a style="text-decoration: none; color:inherit" href="{% url 'prod-detail' prod.id %}">
                     <h5 class="card-title">{{ prod.title }}</h5>
-                    <p class="text-muted">Rating: {{prod.get_star_rating}} ({{ prod.number_of_ratings }} ratings)</p>
+                    <p class="text-muted">Rating: {{prod.get_star_rating | floatformat:2}} ({{ prod.number_of_ratings }} ratings)</p>
                 </a>
                 <a class="card-subtitle text-muted" href="{% url 'seller-prods' prod.seller.username %}">Sold by: {{ prod.seller }}</a>
                 <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ prod.content }}</p>
