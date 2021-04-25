@@ -9,11 +9,7 @@
                 <div class="row" style="display: inline;">
                     <h5 style="display: inline;">Items: <strong>{{ order.get_cart_items }}</strong></h5>
                     <h5 style="display: inline;">Order Total: <strong>{{ order.get_cart_total|floatformat:2 }}</strong></h5>
-                    <a style="display: inline; margin-left: 1rem;"  href="{% url 'app-home' %}" class="btn btn-outline-dark">Continue Shopping</a>
-                </div>
-                   
-                <a style = "float: right; margin: 0.5rem;" class="btn btn-success {% if not order.get_cart_items %} disabled {%endif %}" href="/checkout">Checkout</a>
-                    
+                </div>                    
                 
             </div>
 
@@ -30,28 +26,31 @@
                         <div style="flex:1"><strong>Total</strong></div>
                     </div>
                 </th></tr>
-            {% for item in items %}
+            {% for item in order_items %}
             <tr>
                 <td>
                 <div class="row" style="margin-top: 1rem;">
-                    <div style="flex:2;"><img class="row-img" style="border: 0.5px solid;" height="200" src="{{ item.product.img.url }}" alt="Product Image"></div>
+                    <div style="flex:2;"><img class="row-img" style="border: 0.5px solid;" height="150" src="{{ item.product.img.url }}" alt="Product Image"></div>
                     <div style="flex:2">{{ item.product.title }}</div>
                     <div style="flex:1">{{ item.product.price_per_unit | floatformat:2 }}</div>
                     <div style="flex: 1;">
                         <p class="quantity">{{ item.quantity }}</p>
-                        <div class="quantity">
-                            <button data-product="{{ item.product.id }}" data-action="add" class= "chg-quantity update-cart"><i class="fas fa-angle-up"></i></button>
-                            <button data-product="{{ item.product.id }}" data-action="remove" class= "chg-quantity update-cart" alt="Decrease quantity"><i class="fas fa-angle-down"></i></button>
-                        </div>
                     </div>
                     <div style="flex: 1;">{{ item.get_total|floatformat:2 }}</div>
                     </div>
                 </div>
+                {% for i in feedback_list %}
+                    {% if i.product.id == item.product.id %}
+                    <p style="float: right;">Your rating: {{i.stars}}</p>               
+                    {% endif %}         
+                {% endfor %}
+                <br>
+                <br>
+                <a href="product/{{ item.product.id }}/feedback" class="btn btn-sm btn-outline-secondary" style="float: right;">Rate this product</a>   
             </td>
             </tr>
             {% endfor %}
             </table>        
-            <a style = "float: right; margin: 0.5rem;" class="btn btn-success {% if not order.get_cart_items %} disabled {%endif %}" href="/checkout">Checkout</a>
         </div>
                 
         

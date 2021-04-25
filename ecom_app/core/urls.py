@@ -14,6 +14,8 @@ from core.views import (
     checkout,
     address_helper,
     home_view,
+    add_feedback,
+    order_details
     )
 import users
 urlpatterns = [
@@ -29,4 +31,6 @@ urlpatterns = [
     path('search', search),
     path('checkout', checkout),
     path('address_help', address_helper),
+    path('order/<int:pk>/', order_details, name="order-detials"),
+    path('order/<pk1>/product/<int:pk2>/feedback', add_feedback, name= "order-feedback"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

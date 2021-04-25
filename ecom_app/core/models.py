@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django.core.validators import MinValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from decimal import Decimal
 
 
@@ -18,8 +18,6 @@ UNIT_CHOICES = (
     ("no", "Number (Individual pieces)"),
     ("bags", "Bags"),
 )
-
-
 
 
 
@@ -43,17 +41,26 @@ class Product(models.Model):
 
     )
     price_per_unit = models.DecimalField(max_digits=20, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))])    
+    
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('prod-detail', kwargs={'pk': self.pk})
+
+    @property
+    def get_star_rating(self):
+        feedback_items = self.feedback_set.all()
+        star_ratings = [item.stars for item in feedback_items]
+        tot = sum(star_ratings)
+        return tot/len(star_ratings)
     
 
 class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
     date_ordered = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False)
+    allow_review = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=200, blank=True, null=True)
     
     @property
@@ -74,6 +81,13 @@ class Order(models.Model):
     def __str__(self):
         return str(self.id)
 
+class Feedback(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="feedback")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_posted = models.DateTimeField(auto_now_add=True)
+    stars = models.DecimalField(max_digits=3, decimal_places=2, validators=[MaxValueValidator(5),MinValueValidator(1)], blank=True, null=True)
+    review = models.TextField(blank=True, null=True)
 
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

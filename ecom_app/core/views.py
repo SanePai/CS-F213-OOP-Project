@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from .models import Product
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -18,8 +18,11 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from core.models import Order, OrderItem
+from core.models import Feedback, Order, OrderItem
 import json
+from .forms import FeedbackForm
+from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 
 class ProductListView(ListView):
     model = Product
@@ -124,10 +127,10 @@ def checkout(request):
     if request.method == 'POST':
         form = request.POST
         order = Order.objects.filter(customer = request.user, complete=False).first()
-        order.placed = True
         order.complete = True
+        order.allow_review = True
         order.save()
-
+        
         return render(request, 'core/order_successful.html', context = {})
 
 def address_helper(request):
@@ -145,7 +148,6 @@ def address_helper(request):
         return HttpResponse(response)
 
 @login_required
-# @user_passes_test(user_check)
 def cart(request):
     customer = request.user
     order, created = Order.objects.get_or_create(customer = customer, complete=False)
@@ -176,5 +178,44 @@ def update_item(request):
     if orderItem.quantity <= 0:
         orderItem.delete()
 
-
     return JsonResponse({"Data": " "})
+
+
+@login_required
+def add_feedback(request, pk1, pk2):
+    form = FeedbackForm()
+    order = Order.objects.get(id=pk1)
+    product = Product.objects.get(id=pk2)
+    if order.customer != request.user:
+        raise PermissionDenied()
+    feedback, created = Feedback.objects.get_or_create(order=order, product=product, user=request.user)
+    if request.method == "POST":
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            feedback.stars = form.cleaned_data.get('stars')
+            feedback.review = form.cleaned_data.get('review')
+            feedback.save()
+            messages.success(request, f"Thank you for providing feedback")
+            return redirect('user-orders', feedback.user.username)
+        return render(request, 'core/prod_review.html', {"form": form, "created": created, "feedback": feedback})
+
+    else:
+        form = FeedbackForm()
+        return render(request, 'core/prod_review.html', {"form": form, "created": created, "feedback": feedback})
+
+@login_required
+def order_details(request, pk):
+    order_items = Order.objects.get(id=pk).orderitem_set.all()
+    order = order_items[0].order
+    # prods = [item.product for item in order_items]
+    feedback_list = Feedback.objects.filter(order=order)
+    if order.customer != request.user:
+        raise PermissionDenied()
+
+    context = {
+        "order_items": order_items,
+        "order": order,
+        "feedback_list": feedback_list
+    }
+
+    return render(request, 'core/order_detail.html', context = context)
