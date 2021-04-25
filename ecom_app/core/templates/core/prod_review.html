@@ -15,7 +15,28 @@
              {% if created %}
              <input required name="stars" type="number" min="0" max="5" step="1" id="form1Example1" class="form-control {% if form.errors.stars or form.non_field_errors %}border border-danger{% endif %}" placeholder="{% if created %} Rating (out of 5) {% else %} {{feedback.stars}} {% endif %}"/>
              {% else %}
-             <input name="stars" type="number" min="0" max="5" step="1" id="form1Example1" class="form-control {% if form.errors.stars or form.non_field_errors %}border border-danger{% endif %}" placeholder="{% if created %} Rating (out of 5) {% else %} {{feedback.stars}} {% endif %}"/>
+             <label>Your rating:</label><br><br>
+             <!--<input name="stars" type="number" min="0" max="5" step="1" id="form1Example1" class="form-control {% if form.errors.stars or form.non_field_errors %}border border-danger{% endif %}" placeholder="{% if created %} Rating (out of 5) {% else %} {{feedback.stars}} {% endif %}"/>-->
+             <div class="form-check form-check-inline">
+               <input class="form-check-input" type="radio" name="stars" id="inlineRadio1" value="1">
+               <label class="form-check-label" for="inlineRadio1">1</label>
+             </div>
+             <div class="form-check form-check-inline">
+               <input class="form-check-input" type="radio" name="stars" id="inlineRadio2" value="2">
+               <label class="form-check-label" for="inlineRadio2">2</label>
+             </div>
+             <div class="form-check form-check-inline">
+               <input class="form-check-input" type="radio" name="stars" id="inlineRadio3" value="3">
+               <label class="form-check-label" for="inlineRadio3">3</label>
+             </div>
+             <div class="form-check form-check-inline">
+               <input class="form-check-input" type="radio" name="stars" id="inlineRadio3" value="4">
+               <label class="form-check-label" for="inlineRadio3">4</label>
+             </div>
+             <div class="form-check form-check-inline">
+               <input class="form-check-input" type="radio" name="stars" id="inlineRadio3" value="5">
+               <label class="form-check-label" for="inlineRadio3">5</label>
+             </div>
              {% endif %}
           </div>
  
