@@ -1,10 +1,12 @@
 {% extends "core/base.html" %}
 {% block content %}
     <h2>Order succesfully placed</h2>
+    <p>Order Total: {{ order.get_cart_total|floatformat:2 }}</p>
+    <p>Items: {{ order.get_cart_items }}</p>
     <div class="border-top pt-3">
         <small class="text-muted">
-            <a href="#">Click here to leave feedback on the product</a>
-            <a href="{% url 'user-orders' %}">My Orders</a>
+            <p><a href="{% url 'user-orders' request.user.username %}">Click here</a> to leave feedback on the product</p>
+            <p><a href="{% url 'app-home' %}" class="btn btn-sm btn-outline-primary">Go to Home</a></p>
         </small>
     </div>
 {% endblock content %}

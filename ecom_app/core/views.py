@@ -131,7 +131,7 @@ def checkout(request):
         order.allow_review = True
         order.save()
         
-        return render(request, 'core/order_successful.html', context = {})
+        return render(request, 'core/order_successful.html', context = {"order": order})
 
 def address_helper(request):
     if request.method == 'GET':
@@ -154,7 +154,7 @@ def cart(request):
     items = order.orderitem_set.all()
     cartItems = order.get_cart_items
 
-    return render(request, 'core/cart.html', {"items": items, "order": order})
+    return render(request, 'core/cart.html', {"items": items, "order": order, "cartItems": cartItems})
 
 def update_item(request):
     data = json.loads(request.body)

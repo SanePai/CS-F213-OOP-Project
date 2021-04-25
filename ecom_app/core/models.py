@@ -28,7 +28,6 @@ class Product(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True, null=True)
     img = models.FileField(default = "default.png", upload_to = "", blank=True, null=True)
-    rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.00, validators=[MinValueValidator(Decimal('0.00'))])
     tags = models.CharField(
         max_length = 20,
         choices = CAT_CHOICES,
@@ -50,11 +49,29 @@ class Product(models.Model):
 
     @property
     def get_star_rating(self):
-        feedback_items = self.feedback_set.all()
+        feedback_items = self.feedback.all()
         star_ratings = [item.stars for item in feedback_items]
         tot = sum(star_ratings)
-        return tot/len(star_ratings)
+        if len(star_ratings):
+            return tot/len(star_ratings)
+        else:
+            return 0
+
+    @property
+    def number_of_ratings(self):
+        feedback_items = self.feedback.all()
+        return len([item.stars for item in feedback_items])
     
+    @property
+    def feedback_list(self):
+        return self.feedback.all().filter().order_by('-date_posted')
+    
+    @property
+    def number_of_reviews(self):
+        feedback_items = self.feedback.all()
+        return len([item.review for item in feedback_items if item.review])
+
+
 
 class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -76,18 +93,8 @@ class Order(models.Model):
         total = len(x)
         return total
 
-
-
     def __str__(self):
         return str(self.id)
-
-class Feedback(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="feedback")
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date_posted = models.DateTimeField(auto_now_add=True)
-    stars = models.DecimalField(max_digits=3, decimal_places=2, validators=[MaxValueValidator(5),MinValueValidator(1)], blank=True, null=True)
-    review = models.TextField(blank=True, null=True)
 
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -98,6 +105,15 @@ class OrderItem(models.Model):
     def get_total(self):
         total = self.product.price_per_unit * self.quantity
         return total
+
+class Feedback(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="feedback")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_posted = models.DateTimeField(auto_now_add=True)
+    stars = models.DecimalField(max_digits=3, decimal_places=2, validators=[MaxValueValidator(5),MinValueValidator(1)], blank=True, null=True)
+    review = models.TextField(blank=True, null=True)
+
 
 
 class ShippingAddress(models.Model):

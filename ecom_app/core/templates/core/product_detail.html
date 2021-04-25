@@ -25,7 +25,7 @@
 -->
 
   <!--Section: Block Content-->
-<section class="mb-5" style="margin-top: 2em;">
+<section class="" style="margin-top: 2em;">
   <div class="row">
     <div class="col-md-6 mb-4 mb-md-0">
       <div id="mdb-lightbox-ui"></div>
@@ -62,22 +62,43 @@
             </tr>
             <tr>
               <th class="pl-0 w-25" scope="row"><strong>Rating </strong></th>
-              <td>{{ object.rating }}</td>
+              <td>{{ object.get_star_rating }} ({{ object.number_of_ratings }} ratings)</td>
             </tr>
             <tr>
               <th class="pl-0 w-25" scope="row"><strong>Delivery</strong></th>
-              <td>USA, Europe</td>
+              <td>USA, India</td>
             </tr>
           </tbody>
         </table>
       </div>
       <hr>
-      <button type="button" class="btn btn-primary btn-md mr-1 mb-2">Buy now</button>
       <button data-product="{{ object.id }}" data-action="add" type="button" class="btn btn-secondary btn-md mr-1 mb-2 update-cart"><i
           class="fas fa-shopping-cart pr-2"></i>Add to cart</button>
     </div>
   </div>
 
+</section>
+
+<section class="mb-5 border-top pt-3" style="margin-top: 2rem;">
+  <h2>Reviews: ({{ object.number_of_reviews }} Review(s))</h2>
+  <table>
+    {% for item in object.feedback_list %}
+      {% if item.review %}
+      <tr>
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <p class="mr-2">Posted by: {{ item.user.username }} (Rating: {{item.stars}})</p>
+              <small class="text-muted">{{ item.date_posted|date:"F d, Y" }}</small>
+            </div>
+            <p class="article-content">{{ item.review }}</p>
+          </div>
+        </article>
+
+      </tr>
+      {% endif %}
+    {% endfor %}
+  </table>
 </section>
 <!--Section: Block Content-->
     {% endblock content %}
