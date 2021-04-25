@@ -55,7 +55,7 @@ const csrftoken = getToken('csrftoken');
                       <li><a class="dropdown-item" href="/u/{{user.username}}/orders">Orders</a></li>
                       {% if user.profile.user_type == 'WHOLESALER' or user.profile.user_type == 'RETAILER' %}
                       <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="{% url 'seller-prods' user.username %}">Add/Edit products</a></li>
+                      <li><a class="dropdown-item" href="vendor/{{user.username}}">Add/Edit products</a></li>
                       {% endif %}
                     </ul>
                   </li>

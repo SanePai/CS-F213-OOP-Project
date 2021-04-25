@@ -29,7 +29,7 @@
                     <h5 class="card-title">{{ prod.title }}</h5>
                     <p class="text-muted">Rating: {{prod.get_star_rating}} ({{ prod.number_of_ratings }} ratings)</p>
                 </a>
-                <a class="card-subtitle text-muted" href="{% url 'seller-prods' user.username %}">Sold by: {{ prod.seller }}</a>
+                <a class="card-subtitle text-muted" href="{% url 'seller-prods' prod.seller.username %}">Sold by: {{ prod.seller }}</a>
                 <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ prod.content }}</p>
                 <strong style="float: right;">Price: &#8377;{{ prod.price_per_unit }}</strong>
               </div>

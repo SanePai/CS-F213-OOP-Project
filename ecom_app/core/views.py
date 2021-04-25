@@ -136,9 +136,10 @@ class SellerProductListView(ListView):
         context = super().get_context_data(**kwargs)
         context['seller'] = user
         customer = self.request.user
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        cartItems = order.get_cart_items
-        context['cartItems'] = cartItems
+        if self.request.user.is_authenticated:
+            order, created = Order.objects.get_or_create(customer=customer, complete=False)
+            cartItems = order.get_cart_items
+            context['cartItems'] = cartItems
         return context
 
 class ProductDetailView(DetailView):
